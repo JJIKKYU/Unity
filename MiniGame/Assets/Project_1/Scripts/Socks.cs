@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Socks : MonoBehaviour
+public class Socks : MonoBehaviour, IDragHandler
 {
     // 색상이 있는 양말인지 아닌지
     public bool isColorSocks;
@@ -30,13 +31,40 @@ public class Socks : MonoBehaviour
 
     void Update()
     {
+        detectTouch();
         Move();
+    }
+
+    private void detectTouch()
+    {
+        if (!isColorSocks) return;
+
+        // 마우스 클릭 (터치) 할 경우
+        if (Input.GetMouseButtonDown(0))
+        {
+            // 마우스 클릭(터치) 한 포지션을, 2D 월드 포지션으로 변환
+            Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            // 클릭한 마우스 위치에서 레이캐스트에 걸리는 물체를 hit으로 가져온다
+            RaycastHit2D hit = Physics2D.Raycast(touchPosition, transform.forward, 15f);
+            if (hit)
+            {
+                // 자신을 터치한 게 아니면 리턴
+                if (hit.transform.gameObject != this.transform.gameObject) return;
+
+                // 유채색 양말일 경우
+                if (isColorSocks)
+                {
+                    this.isClicked = true;
+                }
+            }
+        }
     }
 
     // 메인플레이어가 양말을 터치했을때 (색상이 있는 양말일 경우)
     public void ClickSocks()
     {
         if (!isColorSocks) return;
+
         Debug.Log("색상이 있는 양말입니다.");
         this.isClicked = true;
     }
@@ -48,13 +76,14 @@ public class Socks : MonoBehaviour
         transform.position = Vector2.Lerp(transform.position, targetPosition.position, colorSocksSpeed);
     }
 
-    // 메인플레이어가 양말을 스와이프 했을 때 (무채색 양말일 경우)
-    public void SwipeSocks(Vector2 dir)
+    public void OnDrag(PointerEventData eventData)
     {
+        // 유채색 양말은 드래그하지 않음
         if (isColorSocks) return;
-        Debug.Log("무채색 양말입니다");
 
-        // 전달 받은 힘만큼 방향으로 이
-        rigid.AddForce(dir * achromaticColorSocksSpeed, ForceMode2D.Impulse);
+        Debug.Log("이동중");
+        Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        transform.position = new Vector2(touchPosition.x, touchPosition.y);
     }
 }
