@@ -18,7 +18,7 @@ public class ColorSocksManager : MonoBehaviour
             // 마우스 클릭(터치) 한 포지션을, 2D 월드 포지션으로 변환
             Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // 클릭한 마우스 위치에서 레이캐스트에 걸리는 물체를 hit으로 가져온다
-            RaycastHit2D hit = Physics2D.Raycast(touchPosition, transform.forward, 15f);
+            RaycastHit2D hit = Physics2D.Raycast(touchPosition, Vector2.zero, 0f);
             if (hit)
             {
                 Debug.Log("hitObj : " + hit.transform.gameObject.name);
@@ -27,7 +27,7 @@ public class ColorSocksManager : MonoBehaviour
                     Socks socks = hit.transform.GetComponent<Socks>();
                     if (socks.isColorSocks)
                     {
-                        socks.isClicked = true;
+                        socks.ClickSocks();
                     }
                 }
             }

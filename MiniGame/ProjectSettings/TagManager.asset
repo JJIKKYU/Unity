@@ -7,6 +7,7 @@ TagManager:
   - Bag
   - Destination
   - BagCollier
+  - ColorSocks
   layers:
   - Default
   - TransparentFX

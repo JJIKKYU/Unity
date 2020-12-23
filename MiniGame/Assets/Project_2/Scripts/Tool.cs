@@ -20,14 +20,17 @@ public class Tool : MonoBehaviour
     private bool isBagColliderCollision = false;
 
 
+    // 스와이프 시작 포지션
     private Vector2 startPos;
+    // 스와이프 종료 포지션
     private Vector2 endPos;
+    // 타겟
     private Transform target;
+    // 방향
     private Vector2 dir;
 
     // Cache
     private Rigidbody2D rigid;
-    private Transform bagTr;
 
     // Start is called before the first frame update
     void Start()
@@ -75,31 +78,31 @@ public class Tool : MonoBehaviour
 
     }
 
+    // 기본 움직임
     private void Move(Vector2 dir)
     {
         rigid.AddForce(dir * swipeSpeed, ForceMode2D.Impulse);
     }
 
+    // 가방 안으로 들어갈 때 빨려 들어가도록
     private void MoveInBag(Vector2 dir)
     {
         if (!isBagCollision) return;
         if (isBagColliderCollision) return;
-
-        //Vector2 destination = new Vector2(this.transform.position.x, bagTr.position.y);
-        //transform.position = Vector2.Lerp(transform.position, destination, destinationSpeed);
 
         rigid.AddForce(dir * swipeSpeed/2, ForceMode2D.Force);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // 가방과 충돌했을 경우
         if (collision.tag == "Bag")
         {
             Debug.Log("Bag과 충돌했습니다");
             this.isBagCollision = true;
-            bagTr = collision.GetComponent<Transform>();
         }
 
+        // 가방의 하단, 좌측, 우측에 있는 콜라이더와 충돌하면 게임오브젝트 비활성화 
         if (collision.tag == "BagCollier")
         {
             this.isBagColliderCollision = true;

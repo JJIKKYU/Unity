@@ -7,9 +7,6 @@ public class Socks : MonoBehaviour, IDragHandler
 {
     // 색상이 있는 양말인지 아닌지
     public bool isColorSocks;
-
-    // 무채색 양말 스피드
-    private float achromaticColorSocksSpeed = 0.5f;
     // 유채색 양말 스피드
     public float colorSocksSpeed = 0.05f;
 
@@ -21,12 +18,8 @@ public class Socks : MonoBehaviour, IDragHandler
     public bool isClicked = false;
     
 
-    // 캐시
-    private Rigidbody2D rigid;
-
     void Start()
     {
-        rigid = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -43,6 +36,7 @@ public class Socks : MonoBehaviour, IDragHandler
         this.isClicked = true;
     }
 
+    // TargetPosition GameObject로 이동
     private void Move()
     {
         if (!isClicked) return;
@@ -50,6 +44,7 @@ public class Socks : MonoBehaviour, IDragHandler
         transform.position = Vector2.Lerp(transform.position, targetPosition.position, colorSocksSpeed);
     }
 
+    // 무채색 양말 드래ㄱ
     public void OnDrag(PointerEventData eventData)
     {
         // 유채색 양말은 드래그하지 않음
