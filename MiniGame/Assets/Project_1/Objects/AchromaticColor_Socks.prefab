@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8377336289783500474}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.57, y: -0.72, z: 0}
-  m_LocalScale: {x: 2.8649, y: 2.8649, z: 2.8649}
+  m_LocalScale: {x: 4.9112983, y: 4.9112983, z: 4.9112983}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -98,6 +98,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isColorSocks: 0
+  colorSocksSpeed: 0.05
+  targetPosition: {fileID: 0}
+  isClicked: 0
 --- !u!61 &8377336289783500475
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -122,7 +125,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.15, y: 0.15}
   m_EdgeRadius: 0
 --- !u!50 &8377336289783500479
 Rigidbody2D:

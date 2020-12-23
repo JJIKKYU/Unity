@@ -5,14 +5,6 @@ using UnityEngine.EventSystems;
 
 public class CandyPlayer : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public Transform candyObj;
-    // 캔디 위치
-    public Transform candyTargetTr;
-    // 캔디가 이동하는 속도
-    private float speed = 0.05f;
-    // 캔디가 회전하는 속도
-    private float rotationSpeed = 0.05f;
-
     // 목표 스와이프 횟수
     private int maxSwipeCnt = 3;
     // 현재 스와이프 수
@@ -32,19 +24,7 @@ public class CandyPlayer : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     // Update is called once per frame
     void Update()
     {
-        Move();
-    }
-
-    private void Move()
-    {
-        if (currentSwipeCnt < maxSwipeCnt) return;
-
-        Vector2 destination = new Vector2(candyTargetTr.position.x, candyTargetTr.position.y);
-        candyObj.position = Vector2.Lerp(candyObj.position, destination, speed);
-
-        // 캔디의 방향에 맞춰서 회전
-        Quaternion destinationQuaternion = Quaternion.Euler(0, 0, 50);
-        candyObj.rotation = Quaternion.Lerp(candyObj.rotation, destinationQuaternion, Time.time * rotationSpeed);
+        
     }
 
     public void OnBeginDrag(PointerEventData eventData)
