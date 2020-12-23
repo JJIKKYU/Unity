@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class MainPlayer_1 : MonoBehaviour
 {
-    private Vector2 startPos;
-    private Vector2 endPos;
 
+    // 터치 다운 포지션
+    private Vector2 startPos;
+    // 터치 업 포지션
+    private Vector2 endPos;
+    // 터치했을 경우 타겟
     private Socks target;
 
     // Start is called before the first frame update
@@ -56,11 +59,13 @@ public class MainPlayer_1 : MonoBehaviour
 
             // 유채색 양말일 경우
             this.endPos = Input.mousePosition;
+            // 터치 시작과 끝 디렉션 벡터 정규화
             Vector2 dir = (this.endPos - this.startPos).normalized;
             Debug.Log("swipeDir = " + dir);
+            // 정규화한 방향을 오브젝트에게 넘겨줘서 이동하도로
             target.SwipeSocks(dir);
 
-            // 움직이도록 하고 변수 초기ㅎ
+            // 움직이도록 하고 변수 초기화
             this.target = null;
             this.startPos = Vector2.zero;
             this.endPos = Vector2.zero;
