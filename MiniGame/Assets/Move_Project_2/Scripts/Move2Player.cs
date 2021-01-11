@@ -7,7 +7,7 @@ public class Move2Player : MonoBehaviour
 
     private int touchCount = 0;
     private float speed = 0.1f;
-    private float defaultSpeed = 0.05f;
+    private float defaultSpeed = 0.25f;
 
     private Vector2 startPos;
     private Rigidbody2D rigid;
@@ -22,7 +22,6 @@ public class Move2Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Vector2.Distance(transform.position, startPos));
         if (Vector2.Distance(transform.position, startPos) > 0.1f)
         {
             //rigid.AddForce(Vector2.left * defaultSpeed, ForceMode2D.Impulse);
@@ -57,6 +56,17 @@ public class Move2Player : MonoBehaviour
                 }
                 touchCount += 1;
             }
+        }
+    }
+
+    // 장애물에 부딪힐 경우
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Obstacle")
+        {
+            Debug.Log("장애물에 충돌 되었습니다");
+            touchCount = 0;
+            // 재화를 깎는 코드
         }
     }
 
