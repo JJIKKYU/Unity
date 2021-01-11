@@ -9,6 +9,8 @@ TagManager:
   - BagCollier
   - ColorSocks
   - Bullet
+  - Obstacle
+  - Umb
   layers:
   - Default
   - TransparentFX
