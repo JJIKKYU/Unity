@@ -47,7 +47,14 @@ public class Move2Player : MonoBehaviour
                 // 자신을 터치한 게 아니면 리턴
                 if (hit.transform.gameObject != this.transform.gameObject) return;
 
-                transform.position = new Vector2(transform.position.x + speed, transform.position.y);
+                // 중앙 근처라면 움직이지 않도록
+                if ((Vector2.Distance(new Vector2(0f, this.transform.position.y), this.transform.position) < 0.1f))
+                {
+                    transform.position = new Vector2(0f, this.transform.position.y);
+                } else
+                {
+                    transform.position = new Vector2(transform.position.x + speed, transform.position.y);
+                }
                 touchCount += 1;
             }
         }
