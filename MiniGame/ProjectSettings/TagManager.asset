@@ -8,6 +8,7 @@ TagManager:
   - Destination
   - BagCollier
   - ColorSocks
+  - Bullet
   layers:
   - Default
   - TransparentFX
