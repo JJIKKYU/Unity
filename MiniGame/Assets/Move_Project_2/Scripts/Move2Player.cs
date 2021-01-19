@@ -6,11 +6,14 @@ public class Move2Player : MonoBehaviour
 {
 
     private int touchCount = 0;
-    private float speed = 0.1f;
-    private float defaultSpeed = 0.25f;
+    private float speed = 0.8f;
+    private float defaultSpeed = 0.6f;
 
     private Vector2 startPos;
     private Rigidbody2D rigid;
+
+    private bool isMoving = false;
+    private float curPositionX = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -22,12 +25,27 @@ public class Move2Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector2.Distance(transform.position, startPos) > 0.1f)
-        {
-            //rigid.AddForce(Vector2.left * defaultSpeed, ForceMode2D.Impulse);
-            transform.Translate(Vector2.left * Time.deltaTime * defaultSpeed);
-        }
+        
 
+
+        Debug.Log(Mathf.Abs(curPositionX - (this.transform.position.x)));
+        if (isMoving)
+        {
+            transform.Translate(Vector2.right * Time.deltaTime * speed);
+
+            if (Mathf.Abs(curPositionX - this.transform.position.x) > 0.3f)
+            {
+                isMoving = false;
+            }
+
+        } else
+        {
+            if (Vector2.Distance(transform.position, startPos) > 0.1f)
+            {
+                //rigid.AddForce(Vector2.left * defaultSpeed, ForceMode2D.Impulse);
+                transform.Translate(Vector2.left * Time.deltaTime * defaultSpeed);
+            }
+        }
 
         touch();
     }
@@ -52,7 +70,9 @@ public class Move2Player : MonoBehaviour
                     transform.position = new Vector2(0f, this.transform.position.y);
                 } else
                 {
-                    transform.position = new Vector2(transform.position.x + speed, transform.position.y);
+                    isMoving = true;
+                    curPositionX = this.transform.position.x;
+                    //transform.position = new Vector2(transform.position.x + speed, transform.position.y);
                 }
                 touchCount += 1;
             }
