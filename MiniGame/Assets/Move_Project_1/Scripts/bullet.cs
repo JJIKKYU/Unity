@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
-    private int speed = 2;
+    private float speed;
 
     private move1GameManger gameManager;
 
@@ -18,6 +18,8 @@ public class bullet : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         gameManager = GameObject.Find("GameManager").gameObject.GetComponent<move1GameManger>();
+        this.transform.rotation = Quaternion.Euler(0, 30, Random.Range(-70f, 70f));
+        speed = Random.Range(2f, 4f);
     }
 
     // Update is called once per frame
@@ -31,12 +33,11 @@ public class bullet : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Destroy(this.gameObject);
-            gameManager.bulletCountUp();
+            gameManager.bulletCountUp(this.gameObject.GetComponent<bullet>()) ;
+            
         } else if (collision.gameObject.name == "LeftCol")
         {
-            Destroy(this.gameObject);
-            gameManager.destoryBullet();
+            gameManager.destoryBullet(this.gameObject.GetComponent<bullet>());
         }
     }
 
@@ -59,8 +60,7 @@ public class bullet : MonoBehaviour
                 // 자신을 터치한 게 아니면 리턴
                 if (hit.transform.gameObject != this.transform.gameObject) return;
 
-                Destroy(this.gameObject);
-                gameManager.bulletCountUp();
+                gameManager.bulletCountUp(this.gameObject.GetComponent<bullet>());
             }
         }
     }
