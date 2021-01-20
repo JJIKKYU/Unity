@@ -37,6 +37,7 @@ public class Move4Player : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        umb.SetActive(true);
         touchDrag();
     }
 
@@ -48,6 +49,6 @@ public class Move4Player : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     // 드래그가 끝났을 경우 변수 초기화
     public void OnEndDrag(PointerEventData eventData)
     {
-        
+        umb.SetActive(false);
     }
 }

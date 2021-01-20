@@ -8,7 +8,7 @@ public class Obstacle : MonoBehaviour
 
     private AudioSource adSource;
     public AudioClip beep;
-    private bool isBeep = false;
+    public bool isBeep = false;
 
     private BoxCollider2D boxCol;
     private SpriteRenderer renderer;
@@ -36,7 +36,7 @@ public class Obstacle : MonoBehaviour
         if (time > 0f)
         {
             time -= Time.deltaTime;
-            Debug.Log(time);
+            //Debug.Log(time);
         }
         
 

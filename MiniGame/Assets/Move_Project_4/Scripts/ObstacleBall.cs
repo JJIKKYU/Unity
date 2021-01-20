@@ -38,11 +38,17 @@ public class ObstacleBall : MonoBehaviour
         if (collision.gameObject.tag == "Umb")
         {
             isReverse = true;
-            gameManager.ballCount += 1;
+            gameManager.addScore(true);
         } else if (collision.gameObject.tag == "Player")
         {
-            gameManager.ballCount -= 1;
-            Destroy(this.gameObject);
+            gameManager.ballCountDown();
+            gameManager.addScore(false);
+            gameManager.objPool.obstacleBallObjPool.ReturnObject(this.gameObject.GetComponent<ObstacleBall>());
+        } else if (collision.gameObject.tag == "Col")
+        {
+            isReverse = false;
+            gameManager.ballCountDown();
+            gameManager.objPool.obstacleBallObjPool.ReturnObject(this.gameObject.GetComponent<ObstacleBall>());
         }
     }
 }

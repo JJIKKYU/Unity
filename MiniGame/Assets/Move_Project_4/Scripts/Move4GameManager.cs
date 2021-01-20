@@ -5,7 +5,14 @@ using UnityEngine;
 public class Move4GameManager : MonoBehaviour
 {
     public GameObject obstacleBall;
-    public int ballCount;
+
+    public ObjectPool objPool;
+
+    private int score = 0;
+
+    private int maxBallCount = 5;
+    private int curBallCount = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,16 +22,37 @@ public class Move4GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("현재 볼 카운트 = " + ballCount);
-        touch();
+        if (curBallCount < maxBallCount)
+        {
+            ObstacleBall obj = objPool.obstacleBallObjPool.GetObject();
+            obj.transform.position = new Vector2(Random.Range(-3f, 3f), 5.5f);
+            obj.transform.rotation = Quaternion.identity;
+            curBallCount += 1;
+        }
+
     }
 
-    private void touch()
+    public void ballCountDown()
     {
-        // 마우스 클릭 (터치) 할 경우
-        if (Input.GetMouseButtonDown(0))
-        {
-            Instantiate(obstacleBall, new Vector2(Random.Range(-3f, 3f), 5.5f), Quaternion.identity);
-        }
+        if (curBallCount <= 0) return;
+        curBallCount -= 1;
+    }
+
+    public void ballCountUp()
+    {
+        curBallCount += 1;
+    }
+
+    public void addScore(bool flag)
+    {
+        if (flag)
+            score += 1;
+        else
+            score -= 1;
+    }
+
+    public void resetScore()
+    {
+        score = 0;
     }
 }

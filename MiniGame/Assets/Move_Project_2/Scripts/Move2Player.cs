@@ -7,13 +7,15 @@ public class Move2Player : MonoBehaviour
 
     private int touchCount = 0;
     private float speed = 0.8f;
-    private float defaultSpeed = 0.6f;
+    private float defaultSpeed = 1.5f;
 
     private Vector2 startPos;
     private Rigidbody2D rigid;
 
     private bool isMoving = false;
     private float curPositionX = 0f;
+
+    public Obstacle obstacle;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +30,7 @@ public class Move2Player : MonoBehaviour
         
 
 
-        Debug.Log(Mathf.Abs(curPositionX - (this.transform.position.x)));
+        //Debug.Log(Mathf.Abs(curPositionX - (this.transform.position.x)));
         if (isMoving)
         {
             transform.Translate(Vector2.right * Time.deltaTime * speed);
@@ -52,6 +54,8 @@ public class Move2Player : MonoBehaviour
 
     private void touch()
     {
+        if (obstacle.isBeep) return;
+
         // 마우스 클릭 (터치) 할 경우
         if (Input.GetMouseButtonDown(0))
         {
@@ -61,8 +65,6 @@ public class Move2Player : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(touchPosition, transform.forward, 15f);
             if (hit)
             {
-                // 자신을 터치한 게 아니면 리턴
-                if (hit.transform.gameObject != this.transform.gameObject) return;
 
                 // 중앙 근처라면 움직이지 않도록
                 if ((Vector2.Distance(new Vector2(0f, this.transform.position.y), this.transform.position) < 0.1f))
@@ -79,15 +81,10 @@ public class Move2Player : MonoBehaviour
         }
     }
 
-    // 장애물에 부딪힐 경우
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void touchCountDown()
     {
-        if (collision.gameObject.tag == "Obstacle")
-        {
-            Debug.Log("장애물에 충돌 되었습니다");
-            touchCount = 0;
-            // 재화를 깎는 코드
-        }
+        touchCount = 0;
+        Debug.Log("장애물에 충돌 되었습니다");
     }
 
 }

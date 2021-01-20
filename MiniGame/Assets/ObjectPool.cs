@@ -34,9 +34,16 @@ public class ObjectPool : MonoBehaviour
     [SerializeField] private bullet bulletPref;
     public GenericObjectPool<bullet> bulletObjPool;
 
+    [SerializeField] private ObstacleBall obstacleBallPref;
+    public GenericObjectPool<ObstacleBall> obstacleBallObjPool;
+
     void Start()
     {
-        bulletObjPool = new GenericObjectPool<bullet>(bulletPref, this.transform, 10);
+        if (bulletPref) 
+            bulletObjPool = new GenericObjectPool<bullet>(bulletPref, this.transform, 10);
+
+        if (obstacleBallPref)
+            obstacleBallObjPool = new GenericObjectPool<ObstacleBall>(obstacleBallPref, this.transform, 10);
 
     }
 
